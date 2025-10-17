@@ -1,0 +1,14 @@
+/* Custom CSS for FM Memory Game */
+
+/* CSS Variables for Theming */
+:root {
+    --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+
+    --blue-950: #152938;
+    --blue-800: #304859;
+    --blue-400: #7191A5;
+}
