@@ -24,49 +24,48 @@
   </head>
 
   <body id="body" class="min-h-screen transition-all duration-500">
-    <aside id="menu" class="min-h-screen flex flex-col justify-center">
+    <aside id="settings-panel" class="min-h-screen hidden flex-col justify-center">
       <div class="w-full">
-        <h1 class="text-center mb-12 text-2xl text-white">memory</h1>
+        <h1 class="text-center mb-12 text-4xl text-white">memory</h1>
 
         <div class="max-w-lg p-5 rounded-lg mx-auto bg-white shadow-lg">
           <label for="theme-picker" class="block mb-2 text-sm tracking-wide">Select Theme</label>
           <div id="theme-picker" class="flex items-center gap-4 mb-8">
-            <button type="button" class="basis-1/2 button text-lg selected" data-theme="numbers">
+            <button type="button" class="basis-1/2 button setting-button text-lg" data-setting="theme" data-value="1">
               Numbers
             </button>
-            <button type="button" class="basis-1/2 button text-lg" data-theme="icons">
+            <button type="button" class="basis-1/2 button setting-button text-lg" data-setting="theme" data-value="2">
               Icons
             </button>
           </div>
 
           <label for="players-picker" class="block mb-2 text-sm tracking-wide">Numbers of Players</label>
           <div id="players-picker" class="flex items-center gap-4 mb-8">
-            <button type="button" class="basis-1/4 button text-lg selected" data-player-count="1">
+            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="1">
               1
             </button>
-            <button type="button" class="basis-1/4 button text-lg" data-player-count="2">
+            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="2">
               2
             </button>
-            <button type="button" class="basis-1/4 button text-lg" data-player-count="3">
+            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="3">
               3
             </button>
-            <button type="button" class="basis-1/4 button text-lg" data-player-count="4">
+            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="4">
               4
             </button>
           </div>
 
           <label for="size-picker" class="block mb-2 text-sm tracking-wide">Grid Size</label>
           <div id="size-picker" class="flex items-center gap-4 mb-8">
-            <button type="button" class="basis-1/2 button text-lg selected" data-size="4">
+            <button type="button" class="basis-1/2 button setting-button text-lg" data-setting="size" data-value="4">
               4x4
             </button>
-            <button type="button" class="basis-1/2 button text-lg" data-size="6">6x6</button>
+            <button type="button" class="basis-1/2 button setting-button text-lg selected" data-setting="size" data-value="6">6x6</button>
           </div>
 
           <button
             type="button"
-            class="button primary w-full text-xl"
-            id="startNewGame"
+            class="button primary w-full text-xl startNewGame"
           >
             Start Game
           </button>
@@ -74,7 +73,7 @@
       </div>
     </aside>
 
-    <main>
+    <main id="board-panel" class="hidden">
       <header>Header</header>
       <div class="game-container">
         <div id="game-board" class="game-board">Board</div>
