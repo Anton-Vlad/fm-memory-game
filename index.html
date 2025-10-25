@@ -1,11 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memory game</title>
-</head>
-<body>
-    
-</body>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body id="body" class="min-h-screen transition-all duration-500">
+    <aside id="menu" class="min-h-screen flex flex-col justify-center">
+      <div class="w-full">
+        <h1 class="text-center mb-12 text-2xl text-white">memory</h1>
+
+        <div class="max-w-lg p-5 rounded-lg mx-auto bg-white shadow-lg">
+          <label for="theme-picker" class="block mb-2 text-sm tracking-wide">Select Theme</label>
+          <div id="theme-picker" class="flex items-center gap-4 mb-8">
+            <button type="button" class="basis-1/2 button text-lg selected" data-theme="numbers">
+              Numbers
+            </button>
+            <button type="button" class="basis-1/2 button text-lg" data-theme="icons">
+              Icons
+            </button>
+          </div>
+
+          <label for="players-picker" class="block mb-2 text-sm tracking-wide">Numbers of Players</label>
+          <div id="players-picker" class="flex items-center gap-4 mb-8">
+            <button type="button" class="basis-1/4 button text-lg selected" data-player-count="1">
+              1
+            </button>
+            <button type="button" class="basis-1/4 button text-lg" data-player-count="2">
+              2
+            </button>
+            <button type="button" class="basis-1/4 button text-lg" data-player-count="3">
+              3
+            </button>
+            <button type="button" class="basis-1/4 button text-lg" data-player-count="4">
+              4
+            </button>
+          </div>
+
+          <label for="size-picker" class="block mb-2 text-sm tracking-wide">Grid Size</label>
+          <div id="size-picker" class="flex items-center gap-4 mb-8">
+            <button type="button" class="basis-1/2 button text-lg selected" data-size="4">
+              4x4
+            </button>
+            <button type="button" class="basis-1/2 button text-lg" data-size="6">6x6</button>
+          </div>
+
+          <button
+            type="button"
+            class="button primary w-full text-xl"
+            id="startNewGame"
+          >
+            Start Game
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <header>Header</header>
+      <div class="game-container">
+        <div id="game-board" class="game-board">Board</div>
+      </div>
+    </main>
+    <script src="./js/app.js" type="module"></script>
+  </body>
 </html>

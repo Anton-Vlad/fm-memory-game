@@ -2,7 +2,7 @@
 
 /* CSS Variables for Theming */
 :root {
-    --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-primary: linear-gradient(135deg, #152938 0%, #304859 100%);
     --glass-bg: rgba(255, 255, 255, 0.1);
     --glass-border: rgba(255, 255, 255, 0.2);
     --text-primary: #ffffff;
@@ -11,4 +11,51 @@
     --blue-950: #152938;
     --blue-800: #304859;
     --blue-400: #7191A5;
+    --blue-350: #6395B8;
+    --blue-300: #BCCED9;
+    --blue-100: #DFE7EC;
+
+    --gray-100: #F2F2F2;
+    --gray-50: #FCFCFC;
+
+    --orange-400: #FDA214;
+    --orange-300: #FFB84A;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-weight: 700;
+}
+
+label {
+    color: var(--blue-400);
+}
+
+button {
+    text-align: center;
+    padding: .5rem 0rem;
+    border-radius: 50px;
+    background: var(--blue-300);
+    color: white;
+    transition: 0.3s all ease-out;
+}
+
+button.selected {
+    background: var(--blue-800);
+}
+
+button:hover {
+    background: var(--blue-350);
+    cursor: pointer;
+}
+
+button.primary {
+    background: var(--orange-400);
+    color: white;
+}
+
+aside {
+    background: var(--bg-primary);
 }
