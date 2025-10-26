@@ -13,10 +13,8 @@ class App {
   }
 
   init() {
-    console.log("App init called");
     this.ui.init();
     this.ui.showSettingsPanel();
-    // this.ui.showBoardPanel();
     this.ui.updateSettingsState(this.settings);
 
     this.setupEventListeners();
@@ -54,6 +52,12 @@ class App {
         this.restartGame();
         return;
       }
+      
+      if (e.target.closest(".tile:not(.active)")) {
+        const tileElement = e.target.closest(".tile:not(.active)");
+        this.makeMove(tileElement);
+        return;
+      }
 
       console.log("No relevant button clicked");
     });
@@ -61,10 +65,11 @@ class App {
 
   startGame() {
     this.game = new Game(this.settings);
-    this.game.start();
+    const tiles = this.game.start();
 
-    this.ui.showInfoPanel();
+    this.ui.showInfoPanel(this.settings);
     this.ui.showBoardPanel();
+    this.ui.renderTiles(tiles);
   }
 
   endGame() {
@@ -88,7 +93,14 @@ class App {
     this.game.start();
 
     this.ui.cleanInfoPanel();
-    this.ui.showInfoPanel();
+    this.ui.showInfoPanel(this.settings);
+  }
+
+  makeMove(tile) {
+
+    this.game.makeMove(tile);
+
+    this.ui.flipTile(tile);
   }
 }
 
