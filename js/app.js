@@ -16,6 +16,7 @@ class App {
     console.log("App init called");
     this.ui.init();
     this.ui.showSettingsPanel();
+    // this.ui.showBoardPanel();
     this.ui.updateSettingsState(this.settings);
 
     this.setupEventListeners();
@@ -44,14 +45,50 @@ class App {
         return;
       }
 
-      console.log("No relevant button clicked")
+      if (e.target.closest(".endCurrentGame")) {
+        this.endGame();
+        return;
+      }
+      
+      if (e.target.closest(".restartGame")) {
+        this.restartGame();
+        return;
+      }
+
+      console.log("No relevant button clicked");
     });
   }
 
   startGame() {
     this.game = new Game(this.settings);
     this.game.start();
+
+    this.ui.showInfoPanel();
     this.ui.showBoardPanel();
+  }
+
+  endGame() {
+    this.game = null;
+
+    // Reset the initial settings
+    this.settings = {
+      size: 4,
+      theme: 1,
+      playersCount: 1,
+    };
+    this.ui.updateSettingsState(this.settings);
+
+    // Show settings panel and clean info panel
+    this.ui.cleanInfoPanel();
+    this.ui.showSettingsPanel();
+  }
+
+  restartGame() {
+    this.game = new Game(this.settings);
+    this.game.start();
+
+    this.ui.cleanInfoPanel();
+    this.ui.showInfoPanel();
   }
 }
 
@@ -59,4 +96,6 @@ class App {
 document.addEventListener("DOMContentLoaded", () => {
   const app = new App();
   app.init();
+
+  app.startGame();
 });

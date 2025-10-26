@@ -24,43 +24,94 @@
   </head>
 
   <body id="body" class="min-h-screen transition-all duration-500">
-    <aside id="settings-panel" class="min-h-screen hidden flex-col justify-center">
+    <aside
+      id="settings-panel"
+      class="min-h-screen hidden flex-col justify-center"
+    >
       <div class="w-full">
-        <h1 class="text-center mb-12 text-4xl text-white">memory</h1>
+        <h2 class="text-center mb-12 text-4xl text-white">memory</h2>
 
         <div class="max-w-lg p-5 rounded-lg mx-auto bg-white shadow-lg">
-          <label for="theme-picker" class="block mb-2 text-sm tracking-wide">Select Theme</label>
+          <label for="theme-picker" class="block mb-2 text-sm tracking-wide"
+            >Select Theme</label
+          >
           <div id="theme-picker" class="flex items-center gap-4 mb-8">
-            <button type="button" class="basis-1/2 button setting-button text-lg" data-setting="theme" data-value="1">
+            <button
+              type="button"
+              class="basis-1/2 button setting-button text-lg"
+              data-setting="theme"
+              data-value="1"
+            >
               Numbers
             </button>
-            <button type="button" class="basis-1/2 button setting-button text-lg" data-setting="theme" data-value="2">
+            <button
+              type="button"
+              class="basis-1/2 button setting-button text-lg"
+              data-setting="theme"
+              data-value="2"
+            >
               Icons
             </button>
           </div>
 
-          <label for="players-picker" class="block mb-2 text-sm tracking-wide">Numbers of Players</label>
+          <label for="players-picker" class="block mb-2 text-sm tracking-wide"
+            >Numbers of Players</label
+          >
           <div id="players-picker" class="flex items-center gap-4 mb-8">
-            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="1">
+            <button
+              type="button"
+              class="basis-1/4 button setting-button text-lg"
+              data-setting="playersCount"
+              data-value="1"
+            >
               1
             </button>
-            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="2">
+            <button
+              type="button"
+              class="basis-1/4 button setting-button text-lg"
+              data-setting="playersCount"
+              data-value="2"
+            >
               2
             </button>
-            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="3">
+            <button
+              type="button"
+              class="basis-1/4 button setting-button text-lg"
+              data-setting="playersCount"
+              data-value="3"
+            >
               3
             </button>
-            <button type="button" class="basis-1/4 button setting-button text-lg" data-setting="playersCount" data-value="4">
+            <button
+              type="button"
+              class="basis-1/4 button setting-button text-lg"
+              data-setting="playersCount"
+              data-value="4"
+            >
               4
             </button>
           </div>
 
-          <label for="size-picker" class="block mb-2 text-sm tracking-wide">Grid Size</label>
+          <label for="size-picker" class="block mb-2 text-sm tracking-wide"
+            >Grid Size</label
+          >
           <div id="size-picker" class="flex items-center gap-4 mb-8">
-            <button type="button" class="basis-1/2 button setting-button text-lg" data-setting="size" data-value="4">
+            <button
+              type="button"
+              class="basis-1/2 button setting-button text-lg"
+              data-setting="size"
+              data-value="4"
+            >
               4x4
             </button>
-            <button type="button" class="basis-1/2 button setting-button text-lg selected" data-setting="size" data-value="6">6x6</button>
+            <button
+              type="button"
+              class="basis-1/2 button setting-button text-lg selected"
+              data-setting="size"
+              data-value="6"
+            >
+              6x6
+            </button>
           </div>
 
           <button
@@ -73,10 +124,61 @@
       </div>
     </aside>
 
-    <main id="board-panel" class="hidden">
-      <header>Header</header>
-      <div class="game-container">
-        <div id="game-board" class="game-board">Board</div>
+    <main id="board-panel" class="min-h-screen hidden justify-start">
+      <header class="max-w-[80vw] mx-auto flex justify-between items-center p-6">
+        <h2 class="text-center mb-0 text-4xl">memory</h2>
+        <div>
+            <button
+                type="button"
+                class="button primary inline restartGame text-md"
+            >
+                Restart
+            </button>
+            <button
+                type="button"
+                class="button inline text-md endCurrentGame ms-2"
+            >
+                New Game
+            </button>
+        </div>
+      </header>
+      <div class="game-container mt-20 px-4">
+        <div id="game-board" class="game-board mx-auto grid grid-cols-4 grid-rows-4 gap-[1.2rem] aspect-square max-w-[544px] max-h-[90vw]">
+
+
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">1</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">2</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">3</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">4</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">5</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">6</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">7</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">8</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">9</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">10</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">11</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">12</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">13</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">14</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">15</div>
+            <div class="tile flex items-center justify-center text-xl font-semibold rounded-full">16</div>
+       
+        </div>
+
+        <div id="game-info" class="max-w-[544px] mx-auto mt-20 flex gap-5 justify-between items-center">
+            <!-- <div id="game-time" class="custom-bg-blue-100 rounded-md p-2 flex flex-col basis-1/2 items-center justify-between sm:flex-row sm:p-5">
+                <label for="time-ellapsed">Time:</label>
+                <span class="text-xl" id="time-ellapsed">
+                    <span id="minutes">0</span>:<span id="seconds">01</span>
+                </span>
+            </div> -->
+            <!-- <div id="game-moves" class="custom-bg-blue-100 rounded-md p-2 flex flex-col basis-1/2 items-center justify-between sm:flex-row sm:p-5">
+                <label for="moves-made">Moves:</label>
+                <span class="text-xl" id="moves-made">
+                    0
+                </span>
+            </div> -->
+        </div>
       </div>
     </main>
     <script src="./js/app.js" type="module"></script>

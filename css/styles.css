@@ -27,6 +27,16 @@ body {
     font-weight: 700;
 }
 
+.custom-bg-blue-100 {
+    background-color: var(--blue-100);
+}
+.custom-bg-blue-300 {
+    background-color: var(--blue-300);
+}
+.custom-bg-blue-400 {
+    background-color: var(--blue-400);
+}
+
 label {
     color: var(--blue-400);
 }
@@ -38,6 +48,10 @@ button {
     background: var(--blue-300) !important;
     color: white !important;
     transition: 0.3s all ease-out;
+}
+
+header button {
+    padding: .5rem 1.2rem !important;
 }
 
 button.selected {
@@ -61,4 +75,13 @@ button.primary:hover {
 
 aside {
     background: var(--bg-primary);
+}
+
+.game-board {
+    display: grid;
+}
+
+.game-board .tile {
+    background-color: var(--blue-800);
+    color: white;
 }
