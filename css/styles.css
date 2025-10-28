@@ -112,3 +112,13 @@ aside {
     transform: rotateY(180deg);
     color    : white;
 }
+
+.game-board .tile.matched {
+    transform: rotateY(180deg) scale(1);
+    background-color: var(--blue-300);
+}
+
+.game-board .tile.matched .tile-inner {
+    transform: rotateY(180deg);
+    color    : white;
+}

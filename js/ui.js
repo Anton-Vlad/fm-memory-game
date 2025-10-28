@@ -57,6 +57,13 @@ export class UI {
     this.infoPanel.appendChild(movesDisplay);
   }
 
+  updateScoreMoves(movesCount) {
+    const movesMadeElement = document.getElementById("moves-made");
+    if (movesMadeElement) {
+      movesMadeElement.textContent = movesCount.toString();
+    }
+  }
+
   cleanInfoPanel() {
     this.infoPanel.innerHTML = "";
   }
@@ -80,8 +87,40 @@ export class UI {
     tileElement.classList.add("active");
 
     setTimeout(() => {
-        tileElement.classList.add("flipped");
+      tileElement.classList.add("flipped");
     }, 200);
+  }
+
+  flipTilesBack(tileElement, previousTileId) {
+    const previousTileElement = this.getTileElementById(previousTileId);
+
+    tileElement.classList.remove("flipped");
+    previousTileElement.classList.remove("flipped");
+
+    setTimeout(() => {
+      tileElement.classList.remove("active");
+      previousTileElement.classList.remove("active");
+    }, 200);
+  }
+
+  keepTilesFlipped(tileElement, previousTileId) {
+    const previousTileElement = this.getTileElementById(previousTileId);
+
+    tileElement.classList.add("matched");
+    previousTileElement.classList.add("matched");
+  }
+
+  getTileElementById(tileId) {
+    const tileElement = this.gameBoard.querySelector(
+      `.tile[data-id="${tileId}"]`
+    );
+
+    if (!tileElement) {
+      console.error("Tile element not found for id:", tileId);
+      throw new Error("Tile element not found");
+    }
+
+    return tileElement;
   }
 
   renderTiles(tiles) {
@@ -89,34 +128,34 @@ export class UI {
     this.gameBoard.classList.add(`grid-cols-${Math.sqrt(tiles.length)}`);
     this.gameBoard.classList.add(`grid-rows-${Math.sqrt(tiles.length)}`);
 
-    let smFontSizeClass = 'text-xl';
+    let smFontSizeClass = "text-xl";
     if (tiles.length <= 16) {
-        smFontSizeClass = 'text-3xl';
+      smFontSizeClass = "text-3xl";
     }
-    let defaultFontSizeClass = 'text-3xl';
+    let defaultFontSizeClass = "text-3xl";
     if (tiles.length <= 16) {
-        defaultFontSizeClass = 'text-6xl';
+      defaultFontSizeClass = "text-6xl";
     }
 
     for (const tile of tiles) {
-        const tileElement = document.createElement("div");
-        tileElement.className = `tile flex items-center justify-center font-semibold rounded-full ${smFontSizeClass} sm:${defaultFontSizeClass}`;
-        tileElement.dataset.payload = tile.payload;
-        tileElement.dataset.index = tile.id;
+      const tileElement = document.createElement("div");
+      tileElement.className = `tile flex items-center justify-center font-semibold rounded-full ${smFontSizeClass} sm:${defaultFontSizeClass}`;
+      tileElement.dataset.payload = tile.payload;
+      tileElement.dataset.id = tile.id;
 
-        const tileInner = document.createElement("div");
-        tileInner.className = "tile-inner ";
+      const tileInner = document.createElement("div");
+      tileInner.className = "tile-inner ";
 
-        if (tile.type === 1) {
-            tileInner.textContent = tile.payload;
-        } else if (tile.type === 2) {
-            const icon = document.createElement("i");
-            icon.className = `fa ${tile.payload}`;
-            tileInner.appendChild(icon);
-        }
+      if (tile.type === 1) {
+        tileInner.textContent = tile.payload;
+      } else if (tile.type === 2) {
+        const icon = document.createElement("i");
+        icon.className = `fa ${tile.payload}`;
+        tileInner.appendChild(icon);
+      }
 
-        tileElement.appendChild(tileInner);
-        this.gameBoard.appendChild(tileElement);
+      tileElement.appendChild(tileInner);
+      this.gameBoard.appendChild(tileElement);
     }
   }
 }

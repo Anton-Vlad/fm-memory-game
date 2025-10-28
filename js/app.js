@@ -47,15 +47,16 @@ class App {
         this.endGame();
         return;
       }
-      
+
       if (e.target.closest(".restartGame")) {
         this.restartGame();
         return;
       }
-      
-      if (e.target.closest(".tile:not(.active)")) {
-        const tileElement = e.target.closest(".tile:not(.active)");
-        this.makeMove(tileElement);
+
+      if (e.target.closest(".tile:not(.active):not(.matched)")) {
+        const tileElement = e.target.closest(".tile");
+        const tileId = parseInt(tileElement.dataset.id);
+        this.makeMove(tileId, tileElement);
         return;
       }
 
@@ -96,11 +97,51 @@ class App {
     this.ui.showInfoPanel(this.settings);
   }
 
-  makeMove(tile) {
+  makeMove(tileId, tileElement) {
+    const { outcome, tileState, previousTileId } = this.game.makeMove(tileId);
+    console.log("Move outcome:", { outcome, tileState, previousTileId });
 
-    this.game.makeMove(tile);
+    // Act based on outcome, and update UI accordingly
+    switch (outcome) {
+      case 1: // Move started
+        this.ui.flipTile(tileElement);
+        break;
+      case 2: // Tiles match & endGame
+        setTimeout(() => {
+          this.ui.keepTilesFlipped(tileElement, previousTileId);
+          this.ui.updateScoreMoves(this.game.movesCount);
+        }, 1000);
 
-    this.ui.flipTile(tile);
+        setTimeout(() => {
+            console.log("Game would end now.");
+             // this.ui.endGame()
+        }, 3000);
+        break;
+      case 3: // Tiles do not match
+        this.ui.flipTile(tileElement);
+        setTimeout(() => {
+          this.ui.flipTilesBack(tileElement, previousTileId);
+          this.ui.updateScoreMoves(this.game.movesCount);
+        }, 2000);
+        console.log("Tiles DO NOT MATCH, & would flip back now.");
+        break;
+      case 4: // Tiles match & not endGame
+        this.ui.flipTile(tileElement);
+        setTimeout(() => {
+          this.ui.keepTilesFlipped(tileElement, previousTileId);
+          this.ui.updateScoreMoves(this.game.movesCount);
+        }, 1000);
+        console.log("Tiles DO MATCH, keep them flipped.");
+        break;
+      default:
+        console.log("Unknown move outcome:", moveOutcome);
+    }
+
+    console.log(
+      "Current game state:",
+      this.game.movesCount,
+      this.game.matchCount
+    );
   }
 }
 

@@ -9,6 +9,8 @@ export class Game {
     this.timer = null;
 
     this.moveStarted = false;
+    this.tileToMatch = null;
+    this.matchCount = 0;
 
     this.movesCount = 0;
     this.timeElapsed = 0;
@@ -22,7 +24,7 @@ export class Game {
   }
 
   isVictory() {
-    return false;
+    return this.matchCount === (this.size * this.size) / 2;
   }
 
   getRandomIcon() {
@@ -42,16 +44,16 @@ export class Game {
       this.tiles.push({
         id: i,
         type: this.theme,
-        payload: (this.theme === 1 ? i : this.getRandomIcon()),
+        payload: this.theme === 1 ? i : this.getRandomIcon(),
         flipped: false,
         matched: false,
       });
     }
     for (let i = 1; i <= totalTiles / 2; i++) {
       this.tiles.push({
-        id: (totalTiles / 2) + i,
+        id: totalTiles / 2 + i,
         type: this.theme,
-        payload: (this.theme === 1 ? i : ICONS[this.usedIconsIndexex[i - 1]]),
+        payload: this.theme === 1 ? i : ICONS[this.usedIconsIndexex[i - 1]],
         flipped: false,
         matched: false,
       });
@@ -64,13 +66,64 @@ export class Game {
     }
   }
 
-  makeMove(tile) {
-    // if (this.moveStarted) {
-    //   this.endMove(tile);
-    // } else {
-    //   this.startMove(tile);
-    // }
+  makeMove(tileId) {
+    console.log("TILES", this.tiles);
+    const tile = this.tiles.filter((x) => x.id === tileId)[0];
     console.log("Tile clicked:", tile);
+    if (this.moveStarted) {
+      return this.endMove(tile);
+    } else {
+      return this.startMove(tile);
+    }
+  }
+
+  // returns the outcome , in this case always 1 - successful start move
+  startMove(tile) {
+    this.moveStarted = true;
+    this.tileToMatch = tile;
+
+    this.tileToMatch.matched = false;
+    this.tileToMatch.flipped = true;
+    console.log("Move started with tile:", tile);
+
+    return { outcome: 1 };
+  }
+
+  // returns the outcome , 2 - tiles match & endGame, 3 - tiles do not match, 4 - tiles match
+  endMove(tile) {
+    const previousTileId = this.tileToMatch.id;
+    this.movesCount += 1;
+    tile.flipped = true;
+    console.log("Move ended with tile:", { tile, prev: this.tileToMatch });
+
+    if (
+      this.tileToMatch.payload === tile.payload &&
+      this.tileToMatch !== tile
+    ) {
+      for (let t = 0; t < this.tiles.length; t++) {
+        if ([previousTileId, tile.id].includes(this.tiles[t].id)) {
+          this.tiles[t].flipped = false;
+          this.tiles[t].matched = true;
+        }
+      }
+
+      this.matchCount += 1;
+      this.moveStarted = false;
+      this.tileToMatch = null;
+      return this.isVictory()
+        ? { outcome: 2, tileState: this.tiles, previousTileId }
+        : { outcome: 4, tileState: this.tiles, previousTileId };
+    }
+
+    this.moveStarted = false;
+    this.tileToMatch = null;
+    for (let t = 0; t < this.tiles.length; t++) {
+      if ([previousTileId, tile.id].includes(this.tiles[t].id)) {
+        this.tiles[t].flipped = false;
+        this.tiles[t].matched = false;
+      }
+    }
+    return { outcome: 3, tileState: this.tiles, previousTileId };
   }
 
   start() {
