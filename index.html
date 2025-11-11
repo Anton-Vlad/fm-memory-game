@@ -124,27 +124,90 @@
       </div>
     </aside>
 
+    <dialog
+      id="endgame-dialog"
+      class="rounded-2xl p-8 bg-white max-w-lg w-full shadow-2xl"
+    >
+      <h2 class="text-4xl font-semibold text-color-950 mb-2 text-center">
+        <!-- You did it! -->
+         Player 3 Wins!
+      </h2>
+      <!-- <p class="text-sm text-center text-color-400 mb-8">Game over! Here’s how you got on…</p> -->
+      <p class="text-sm text-center text-color-400 mb-8">Game over! Here are the results…</p>
+      <div class="space-y-3 ">
+        <!-- <div class="custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row" id="game-time">
+            <label>Time Elapsed</label>
+            <span class="text-2xl text-color-800">
+                <span id="final-minutes">0</span>:<span id="final-seconds">01</span>
+            </span>
+        </div> -->
+        <!-- <div class="custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row" id="game-moves">
+            <label>Moves Taken</label>
+            <span class="text-2xl text-color-800">
+                <span id="final-moves">23</span> Moves
+            </span>
+        </div> -->
+        <div class="special custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row" id="game-moves">
+            <label>Player 3</label>
+            <span class="text-2xl text-color-800">
+                <span id="player-3-pairs">8</span> Pairs
+            </span>
+        </div>
+        <div class="custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row" id="game-moves">
+            <label>Player 1</label>
+            <span class="text-2xl text-color-800">
+                <span id="player-1-pairs">5</span> Pairs
+            </span>
+        </div>
+        <div class="custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row" id="game-moves">
+            <label>Player 2</label>
+            <span class="text-2xl text-color-800">
+                <span id="player-2-pairs">3</span> Pairs
+            </span>
+        </div>
+        <div class="custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row" id="game-moves">
+            <label>Player 4</label>
+            <span class="text-2xl text-color-800">
+                <span id="player-4-pairs">1</span> Pairs
+            </span>
+        </div>
+      </div>
+      <form method="dialog" class="mt-8 mb-4 flex justify-center gap-5">
+        <!-- <button type="button" class="button primary inline restartGame text-md basis-1/2">
+          Restart
+        </button> -->
+        <button type="button" class="button inline text-md endCurrentGame basis-1/2 text-color-800">
+          Setup New Game
+        </button>
+      </form>
+    </dialog>
+
     <main id="board-panel" class="min-h-screen hidden justify-start">
-      <header class="max-w-[80vw] pt-12 mx-auto flex justify-between items-center p-6">
+      <header
+        class="max-w-[80vw] pt-12 mx-auto flex justify-between items-center p-6"
+      >
         <h2 class="text-center mb-0 text-3xl">memory</h2>
         <div>
-            <button
-                type="button"
-                class="button primary inline restartGame text-md"
-            >
-                Restart
-            </button>
-            <button
-                type="button"
-                class="button inline text-md endCurrentGame ms-2"
-            >
-                New Game
-            </button>
+          <button
+            type="button"
+            class="button primary inline restartGame text-md"
+          >
+            Restart
+          </button>
+          <button
+            type="button"
+            class="button inline text-md endCurrentGame ms-2"
+          >
+            New Game
+          </button>
         </div>
       </header>
       <div class="game-container mt-16 px-4">
-        <div id="game-board" class="game-board mx-auto grid gap-[0.6rem] sm:gap-[1.2rem] aspect-square max-w-[544px] max-h-[90vw]">
-            <!-- <div class="tile flex items-center justify-center text-xl font-semibold rounded-full xs:text-4xl sm:text-6xl">
+        <div
+          id="game-board"
+          class="game-board mx-auto grid gap-[0.6rem] sm:gap-[1.2rem] aspect-square max-w-[544px] max-h-[90vw]"
+        >
+          <!-- <div class="tile flex items-center justify-center text-xl font-semibold rounded-full xs:text-4xl sm:text-6xl">
                 <div class="tile-inner">
                     <i class="fa fa-cloud-rain"></i>
                 </div>
@@ -156,14 +219,17 @@
             </div> -->
         </div>
 
-        <div id="game-info" class="max-w-[544px] mx-auto mt-20 flex gap-5 justify-between items-center">
-            <!-- <div id="game-time" class="custom-bg-blue-100 rounded-md p-2 flex flex-col basis-1/2 items-center justify-between sm:flex-row sm:p-5">
+        <div
+          id="game-info"
+          class="max-w-[544px] mx-auto mt-20 flex gap-5 justify-between items-center"
+        >
+          <!-- <div id="game-time" class="custom-bg-blue-100 rounded-md p-2 flex flex-col basis-1/2 items-center justify-between sm:flex-row sm:p-5">
                 <label for="time-ellapsed">Time:</label>
                 <span class="text-xl" id="time-ellapsed">
                     <span id="minutes">0</span>:<span id="seconds">01</span>
                 </span>
             </div> -->
-            <!-- <div id="game-moves" class="custom-bg-blue-100 rounded-md p-2 flex flex-col basis-1/2 items-center justify-between sm:flex-row sm:p-5">
+          <!-- <div id="game-moves" class="custom-bg-blue-100 rounded-md p-2 flex flex-col basis-1/2 items-center justify-between sm:flex-row sm:p-5">
                 <label for="moves-made">Moves:</label>
                 <span class="text-xl" id="moves-made">
                     0
