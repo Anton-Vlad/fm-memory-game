@@ -1,5 +1,12 @@
 import { UI } from "./ui.js";
 import { Game } from "./game.js";
+import { Cronometer } from "./cronometer.js";
+import {
+  START_MOVE_FLAG,
+  FINAL_MOVE_FLAG,
+  END_MOVE_FLAG,
+  MATCH_MOVE_FLAG,
+} from "./const.js";
 
 class App {
   constructor() {
@@ -10,6 +17,11 @@ class App {
       theme: 1, // 1 - numbers, 2 - icons
       playersCount: 1,
     };
+
+    // To be moved in the UpdateSettingsState method, to decide which timer or cronomter to use
+    this.cronometer = new Cronometer((minutes, seconds) =>
+      this.ui.updateTimerDisplay(minutes, seconds)
+    );
   }
 
   init() {
@@ -71,10 +83,12 @@ class App {
     this.ui.showInfoPanel(this.settings);
     this.ui.showBoardPanel();
     this.ui.renderTiles(tiles);
+    this.cronometer.start();
   }
 
   endGame() {
     this.game = null;
+    this.cronometer.stop();
 
     // Reset the initial settings
     this.settings = {
@@ -91,57 +105,57 @@ class App {
 
   restartGame() {
     this.game = new Game(this.settings);
-    this.game.start();
 
     this.ui.cleanInfoPanel();
     this.ui.showInfoPanel(this.settings);
+
+    const tiles = this.game.start();
+    this.ui.renderTiles(tiles);
+    this.cronometer.start();
   }
 
   makeMove(tileId, tileElement) {
     const { outcome, tileState, previousTileId } = this.game.makeMove(tileId);
-    console.log("Move outcome:", { outcome, tileState, previousTileId });
 
     // Act based on outcome, and update UI accordingly
     switch (outcome) {
-      case 1: // Move started
+      case START_MOVE_FLAG:
         this.ui.flipTile(tileElement);
         break;
-      case 2: // Tiles match & endGame
+      case FINAL_MOVE_FLAG:
         setTimeout(() => {
           this.ui.keepTilesFlipped(tileElement, previousTileId);
           this.ui.updateScoreMoves(this.game.movesCount);
-        }, 1000);
+        }, 2000);
 
         setTimeout(() => {
-            console.log("Game would end now.");
-             // this.ui.endGame()
+          this.game.timeElapsed = this.cronometer.getTimeElapsed();
+          this.cronometer.stop();
+          this.ui.showResultsModal(
+            this.settings,
+            this.game.movesCount,
+            this.game.timeElapsed
+          );
+          // save results in local storage or send to server
         }, 3000);
         break;
-      case 3: // Tiles do not match
+      case END_MOVE_FLAG:
         this.ui.flipTile(tileElement);
         setTimeout(() => {
           this.ui.flipTilesBack(tileElement, previousTileId);
           this.ui.updateScoreMoves(this.game.movesCount);
         }, 2000);
-        console.log("Tiles DO NOT MATCH, & would flip back now.");
         break;
-      case 4: // Tiles match & not endGame
+      case MATCH_MOVE_FLAG: // Tiles match & not endGame
         this.ui.flipTile(tileElement);
         setTimeout(() => {
           this.ui.keepTilesFlipped(tileElement, previousTileId);
           this.ui.updateScoreMoves(this.game.movesCount);
         }, 1000);
-        console.log("Tiles DO MATCH, keep them flipped.");
         break;
       default:
         console.log("Unknown move outcome:", moveOutcome);
     }
-
-    console.log(
-      "Current game state:",
-      this.game.movesCount,
-      this.game.matchCount
-    );
   }
 }
 

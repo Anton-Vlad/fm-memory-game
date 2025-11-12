@@ -1,4 +1,5 @@
 import { ICONS } from "./icons.js";
+import { START_MOVE_FLAG, FINAL_MOVE_FLAG, END_MOVE_FLAG, MATCH_MOVE_FLAG } from "./const.js";
 
 export class Game {
   constructor(settings) {
@@ -13,7 +14,7 @@ export class Game {
     this.matchCount = 0;
 
     this.movesCount = 0;
-    this.timeElapsed = 0;
+    this.timeElapsed = "";
     // this.matchedPairs = 0; // per player in multiplayer mode
 
     this.usedIconsIndexex = [];
@@ -86,7 +87,7 @@ export class Game {
     this.tileToMatch.flipped = true;
     console.log("Move started with tile:", tile);
 
-    return { outcome: 1 };
+    return { outcome: START_MOVE_FLAG };
   }
 
   // returns the outcome , 2 - tiles match & endGame, 3 - tiles do not match, 4 - tiles match
@@ -111,8 +112,8 @@ export class Game {
       this.moveStarted = false;
       this.tileToMatch = null;
       return this.isVictory()
-        ? { outcome: 2, tileState: this.tiles, previousTileId }
-        : { outcome: 4, tileState: this.tiles, previousTileId };
+        ? { outcome: FINAL_MOVE_FLAG, tileState: this.tiles, previousTileId }
+        : { outcome: MATCH_MOVE_FLAG, tileState: this.tiles, previousTileId };
     }
 
     this.moveStarted = false;
@@ -123,7 +124,7 @@ export class Game {
         this.tiles[t].matched = false;
       }
     }
-    return { outcome: 3, tileState: this.tiles, previousTileId };
+    return { outcome: END_MOVE_FLAG, tileState: this.tiles, previousTileId };
   }
 
   start() {

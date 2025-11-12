@@ -10,10 +10,63 @@ export class UI {
   init() {
     this.settingsPanel = document.getElementById("settings-panel");
     this.boardPanel = document.getElementById("board-panel");
-    // this.resultModal = document.getElementById("result-modal");
+    this.resultModal = document.getElementById("results-modal");
     this.gameBoard = document.getElementById("game-board");
     this.infoPanel = document.getElementById("game-info");
     this.cleanInfoPanel();
+  }
+
+  showResultsModal(settings, movesCount, timeElapsed) {
+    if (settings.playersCount > 1) {
+        this.populateMultiplayerResults(movesCount, timeElapsed);
+    } else {
+        this.populateSingleplayerResults(movesCount, timeElapsed);
+    }
+
+    this.resultModal.showModal();
+  }
+
+  populateMultiplayerResults(movesCount, timeElapsed) {
+    return ``;
+  }
+
+  populateSingleplayerResults(movesCount, timeElapsed) {
+    this.resultModal.querySelector("h2").textContent = "You did it!";
+    this.resultModal.querySelector("p.suttitle").innerHTML = `Game over! Here’s how you got on…`;
+    const resultsTable = this.resultModal.querySelector(".results-table");
+    resultsTable.innerHTML = "";
+
+    const timeEllapesedRow = document.createElement("div");
+    timeEllapesedRow.className = "custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row";
+    timeEllapesedRow.innerHTML = `
+        <label>Time Elapsed</label>
+        <span class="text-2xl text-color-800">${timeElapsed}</span>
+    `;
+    const movesMadeRow = document.createElement("div");
+    movesMadeRow.className = "custom-bg-blue-100 rounded-md px-4 py-3 flex flex-col basis-1/2 items-center justify-between sm:flex-row";
+    movesMadeRow.innerHTML = `
+        <label>Moves Taken</label>
+        <span class="text-2xl text-color-800">${movesCount} Moves</span>
+    `;
+
+    resultsTable.appendChild(timeEllapesedRow);
+    resultsTable.appendChild(movesMadeRow);
+
+    const formActions = this.resultModal.querySelector("form");
+    formActions.innerHTML = ``;
+
+    const restartBtn = document.createElement("button");
+    restartBtn.type = "button";
+    restartBtn.className = "button primary inline restartGame text-md basis-1/2";
+    restartBtn.textContent = "Restart";
+    
+    const newGameBtn = document.createElement("button");
+    newGameBtn.type = "button";
+    newGameBtn.className = "button inline text-md endCurrentGame basis-1/2 text-color-800";
+    newGameBtn.textContent = "Setup New Game";
+
+    formActions.appendChild(restartBtn);
+    formActions.appendChild(newGameBtn);
   }
 
   showSettingsPanel() {
@@ -38,7 +91,7 @@ export class UI {
     timeDisplay.innerHTML = `
         <label for="time-ellapsed">Time:</label>
         <span class="text-xl" id="time-ellapsed">
-            <span id="minutes">0</span>:<span id="seconds">01</span>
+            <span id="minutes">0</span>:<span id="seconds">00</span>
         </span>
     `;
 
@@ -61,6 +114,15 @@ export class UI {
     const movesMadeElement = document.getElementById("moves-made");
     if (movesMadeElement) {
       movesMadeElement.textContent = movesCount.toString();
+    }
+  }
+
+  updateTimerDisplay(minutes, seconds) {
+    const minutesElement = document.getElementById("minutes");
+    const secondsElement = document.getElementById("seconds");
+    if (minutesElement && secondsElement) {
+      minutesElement.textContent = minutes.toString();
+      secondsElement.textContent = seconds.toString().padStart(2, '0');
     }
   }
 
